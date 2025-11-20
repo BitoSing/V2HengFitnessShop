@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Heng Fitness Shop - Premium Equipment</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Battambang:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ================= CSS VARIABLES & RESET ================= */
+        :root {
+            --primary: #0f766e;        /* Teal 700 */
+            --primary-light: #14b8a6;  /* Teal 500 */
+            --primary-dark: #0d5f58;
+            --secondary: #111827;      /* Dark Blue/Gray */
+            --accent: #f59e0b;         /* Amber */
+            --danger: #ef4444;         /* Red */
+            --bg-body: #f3f4f6;
+            --bg-white: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+        ul { list-style: none; }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
+        
+        /* Helpers */
+        .khmer-text { font-family: 'Battambang', cursive; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 15px; }
+        
+        /* Buttons */
+        .btn { cursor: pointer; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; transition: var(--transition); display: inline-flex; align-items: center; gap: 8px; justify-content: center; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: var(--shadow); }
+        .btn-secondary { background: white; border: 1px solid #e5e7eb; color: var(--text-main); }
+        .btn-secondary:hover { background: #f9fafb; border-color: var(--primary); color: var(--primary); }
+        .btn-danger { background: #fee2e2; color: var(--danger); }
+        .btn-danger:hover { background: var(--danger); color: white; }
+
+        /* ================= TOP BAR ================= */
+        .top-bar { background: var(--secondary); color: white; font-size: 0.8rem; padding: 8px 0; }
+        .top-bar .container { display: flex; justify-content: space-between; align-items: center; }
+        .top-info span { margin-right: 20px; opacity: 0.9; display: inline-flex; align-items: center; gap: 6px; }
+        .top-socials a { color: white; margin-left: 15px; transition: 0.2s; opacity: 0.7; }
+        @media(max-width: 768px) { 
+            .top-info span:not(:first-child) { display: none; } 
+            .top-socials { display: none; }
+            .top-bar .container { justify-content: center; }
+        }
+
+        /* ================= MAIN NAVBAR ================= */
+        .navbar {
+            position: sticky; top: 0; z-index: 1000;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+            transition: padding 0.3s ease, box-shadow 0.3s ease;
+        }
+        .navbar.scrolled { box-shadow: 0 10px 30px rgba(0,0,0,0.08); padding: 5px 0; }
+        
+        .nav-content { display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        
+        /* Logo */
+        .logo { font-size: 1.4rem; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+        .logo i { font-size: 1.6rem; color: var(--primary); transform: rotate(-15deg); }
+
+        /* Search */
+        .nav-search-wrapper { flex: 1; display: flex; justify-content: center; max-width: 500px; margin: 0 20px; }
+        .nav-search { position: relative; width: 100%; }
+        .nav-search input {
+            width: 100%; padding: 10px 20px 10px 40px; border-radius: 50px;
+            border: 2px solid #f3f4f6; background: #f3f4f6;
+            font-size: 0.9rem; transition: var(--transition); outline: none;
+        }
+        .nav-search input:focus { background: white; border-color: var(--primary); }
+        .nav-search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1rem; }
+
+        /* Desktop Links */
+        .nav-links { display: flex; gap: 25px; align-items: center; margin-right: 20px; }
+        .nav-item { position: relative; font-weight: 500; font-size: 0.95rem; cursor: pointer; padding: 10px 0; white-space: nowrap; }
+        .nav-item:hover { color: var(--primary); }
+        
+        /* Dropdown */
+        .dropdown {
+            position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(10px);
+            background: white; min-width: 200px; border-radius: 12px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15); padding: 10px;
+            opacity: 0; visibility: hidden; transition: all 0.3s ease; border: 1px solid #eee;
+        }
+        .nav-item:hover .dropdown { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+        .drop-link { display: flex; align-items: center; gap: 10px; padding: 10px 15px; border-radius: 8px; font-size: 0.9rem; color: var(--text-main); transition: 0.2s; }
+        .drop-link:hover { background: #f0fdfa; color: var(--primary); }
+
+        /* Action Icons */
+        .nav-actions { display: flex; align-items: center; gap: 10px; }
+        .icon-btn { 
+            position: relative; background: white; border: 1px solid #e5e7eb; 
+            width: 40px; height: 40px; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 1.1rem; color: var(--secondary); transition: var(--transition); cursor: pointer; 
+        }
+        .icon-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+        .icon-btn .badge {
+            position: absolute; top: -5px; right: -5px;
+            background: var(--accent); color: white;
+            font-size: 0.65rem; width: 18px; height: 18px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            border: 2px solid white; font-weight: 700;
+        }
+
+        .mobile-toggle { display: none; font-size: 1.4rem; cursor: pointer; margin-left: 5px; color: var(--secondary); background: none; border: none; padding: 5px; }
+
+        /* ================= RESPONSIVE NAVBAR ================= */
+        @media(max-width: 1024px) {
+            .nav-links { display: none; }
+            .mobile-toggle { display: block; }
+            .nav-search-wrapper { margin: 0 15px; }
+        }
+        @media(max-width: 768px) {
+            .nav-search-wrapper { display: none; } /* Search moves to mobile menu */
+        }
+
+        /* ================= SIDEBARS ================= */
+        .sidebar-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 1090; display: none; backdrop-filter: blur(3px);
+        }
+        .sidebar-overlay.active { display: block; }
+
+        .right-sidebar {
+            position: fixed; top: 0; right: -100%; width: 400px; max-width: 85vw; height: 100%;
+            background: white; z-index: 1100; box-shadow: -5px 0 25px rgba(0,0,0,0.1);
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column;
+        }
+        .right-sidebar.active { right: 0; }
+        @media(max-width: 480px) { .right-sidebar { width: 100%; max-width: 100%; } }
+
+        .sidebar-header { padding: 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; background: var(--primary); color: white; }
+        .sidebar-body { flex: 1; overflow-y: auto; padding: 15px; }
+        .sidebar-footer { padding: 20px; border-top: 1px solid #e5e7eb; background: #f9fafb; }
+
+        .side-item { display: flex; gap: 12px; margin-bottom: 15px; border-bottom: 1px solid #f3f4f6; padding-bottom: 15px; }
+        .side-item img { width: 70px; height: 70px; object-fit: cover; border-radius: 8px; border: 1px solid #eee; }
+        .side-item-info { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .side-item-title { font-weight: 600; font-size: 0.9rem; line-height: 1.2; margin-bottom: 5px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .qty-controls { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
+        .qty-btn { width: 26px; height: 26px; border: 1px solid #ddd; background: white; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+
+        /* ================= HERO ================= */
+        .hero {
+            min-height: 400px; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover;
+            display: flex; align-items: center; justify-content: center; text-align: center; color: white; border-radius: 0 0 30px 30px; margin-bottom: 40px; padding: 20px;
+        }
+        .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; margin-bottom: 10px; line-height: 1.1; }
+        .hero p { font-size: clamp(1rem, 3vw, 1.2rem); opacity: 0.9; margin-bottom: 25px; max-width: 600px; }
+
+        /* ================= MAIN LAYOUT ================= */
+        .main-layout { display: grid; grid-template-columns: 250px 1fr; gap: 30px; min-height: 80vh; }
+        
+        /* Filter Sidebar */
+        .filter-sidebar { background: white; padding: 20px; border-radius: var(--radius); box-shadow: var(--shadow); height: fit-content; position: sticky; top: 100px; }
+        .cat-btn { width: 100%; text-align: left; padding: 12px 15px; margin-bottom: 5px; background: none; border: none; border-radius: 8px; cursor: pointer; transition: var(--transition); color: var(--text-muted); font-weight: 500; display: flex; justify-content: space-between; align-items: center; }
+        .cat-btn:hover, .cat-btn.active { background: #f0fdfa; color: var(--primary); }
+        .cat-btn.active { font-weight: 700; border-left: 4px solid var(--primary); }
+
+        /* Products Grid & Responsive */
+        .products-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+        
+        /* Tablet & Mobile Layout */
+        @media(max-width: 1024px) {
+            .main-layout { grid-template-columns: 1fr; gap: 20px; }
+            .filter-sidebar { display: none; } /* Hidden on mobile, use mobile menu */
+        }
+
+        @media(max-width: 640px) {
+            .hero { border-radius: 0 0 20px 20px; min-height: 300px; }
+            .products-grid { 
+                grid-template-columns: 1fr 1fr; /* Force 2 columns on mobile */
+                gap: 10px; 
+            }
+            .container { padding: 0 10px; }
+        }
+
+        /* Product Card */
+        .product-card { 
+            background: white; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); 
+            transition: var(--transition); border: 1px solid transparent; position: relative; display: flex; flex-direction: column;
+        }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.1); }
+        
+        .product-badge { position: absolute; top: 8px; left: 8px; padding: 3px 8px; border-radius: 20px; color: white; font-size: 0.65rem; font-weight: 700; z-index: 2; text-transform: uppercase; letter-spacing: 0.5px; }
+        .badge-hot { background: #ef4444; }
+        .badge-new { background: #3b82f6; }
+
+        .product-img { 
+            aspect-ratio: 1/1; /* Square images */
+            overflow: hidden; position: relative; background: #f3f4f6; cursor: pointer; 
+        }
+        .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        
+        /* Hover overlay - Hidden on Touch devices mostly */
+        .card-overlay {
+            position: absolute; bottom: -50px; left: 0; width: 100%; background: rgba(255,255,255,0.9);
+            padding: 8px; display: flex; justify-content: center; gap: 10px; transition: var(--transition); backdrop-filter: blur(4px);
+        }
+        @media(hover: hover) {
+            .product-card:hover .product-img img { transform: scale(1.08); }
+            .product-card:hover .card-overlay { bottom: 0; }
+        }
+        
+        .overlay-btn { width: 35px; height: 35px; border-radius: 50%; background: white; border: 1px solid #eee; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .overlay-btn:hover { background: var(--primary); color: white; }
+
+        .product-info { padding: 12px; flex-grow: 1; display: flex; flex-direction: column; }
+        .product-cat { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; }
+        .product-name { 
+            font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; line-height: 1.3; color: var(--text-main); flex-grow: 1; 
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .product-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; flex-wrap: wrap; gap: 5px; }
+        .product-price { font-size: 1rem; color: var(--primary); font-weight: 700; }
+        .add-btn-sm { padding: 5px 12px; font-size: 0.8rem; border-radius: 6px; }
+
+        @media(max-width: 640px) {
+            .product-info { padding: 10px; }
+            .product-name { font-size: 0.85rem; }
+            .product-price { font-size: 0.95rem; }
+        }
+
+        /* ================= MODALS ================= */
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 1200;
+            display: none; align-items: center; justify-content: center; padding: 15px; opacity: 0; transition: opacity 0.3s;
+        }
+        .modal.active { display: flex; opacity: 1; }
+        
+        .modal-content {
+            background: white; width: 100%; max-width: 900px; max-height: 90vh; overflow-y: auto;
+            border-radius: 16px; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            transform: scale(0.95); transition: transform 0.3s; display: flex; flex-direction: column;
+        }
+        .modal.active .modal-content { transform: scale(1); }
+        
+        .modal-close-btn { position: absolute; top: 10px; right: 10px; width: 35px; height: 35px; border-radius: 50%; background: #f3f4f6; border: none; font-size: 1.2rem; cursor: pointer; z-index: 10; }
+
+        .prod-modal-body { display: grid; grid-template-columns: 1fr 1fr; }
+        .modal-img-wrapper { padding: 20px; background: #f9fafb; display: flex; align-items: center; justify-content: center; }
+        .modal-img-wrapper img { max-height: 400px; object-fit: contain; mix-blend-mode: multiply; }
+        .modal-info { padding: 30px; }
+
+        @media(max-width: 768px) {
+            .prod-modal-body { grid-template-columns: 1fr; }
+            .modal-img-wrapper { padding: 15px; height: 250px; }
+            .modal-img-wrapper img { max-height: 100%; }
+            .modal-info { padding: 20px; }
+            .modal-title { font-size: 1.5rem; }
+        }
+
+        /* Invoice Modal Responsive */
+        .invoice-box { padding: 30px; }
+        .invoice-table-wrapper { overflow-x: auto; }
+        .invoice-table { width: 100%; min-width: 500px; border-collapse: collapse; margin-top: 20px; }
+        @media(max-width: 600px) {
+            .invoice-box { padding: 15px; }
+            .invoice-header { flex-direction: column; gap: 15px; }
+            .invoice-header div { text-align: left !important; }
+        }
+
+        /* Mobile Menu */
+        .mobile-menu { 
+            position: fixed; top: 0; left: -100%; width: 300px; max-width: 85%; height: 100%; 
+            background: white; z-index: 1200; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            padding: 20px; display: flex; flex-direction: column; box-shadow: 5px 0 25px rgba(0,0,0,0.1); 
+        }
+        .mobile-menu.active { left: 0; }
+
+        /* ================= FOOTER ================= */
+        .footer-enhanced { background: #111827; color: #d1d5db; margin-top: 60px; padding: 60px 0 20px; border-top: 4px solid var(--primary); }
+        .footer-grid-3 { display: grid; grid-template-columns: 1.5fr 1fr 1.2fr; gap: 40px; }
+        
+        @media (max-width: 900px) { .footer-grid-3 { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+        @media (max-width: 600px) { .footer-grid-3 { grid-template-columns: 1fr; gap: 30px; } }
+
+        .footer-brand h2 { color: white; font-size: 1.5rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .footer-social-glass { display: flex; gap: 10px; }
+        .footer-social-btn { width: 40px; height: 40px; border-radius: 8px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; color: white; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; }
+        .footer-social-btn:hover { background: var(--primary); border-color: var(--primary); }
+        
+        .footer-list a { display: block; padding: 5px 0; transition: 0.2s; }
+        .footer-input-group { position: relative; display: flex; margin-bottom: 20px; }
+        .footer-input-group input { flex: 1; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 6px 0 0 6px; color: white; }
+        .footer-input-group button { padding: 0 20px; background: var(--primary); border: none; color: white; border-radius: 0 6px 6px 0; }
+        
+        .footer-contact-row { display: flex; gap: 15px; margin-bottom: 15px; align-items: center; }
+        .contact-icon-box { width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-light); flex-shrink: 0; }
+
+        /* Toast */
+        #toast-container { position: fixed; bottom: 20px; right: 20px; left: 20px; pointer-events: none; z-index: 2000; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+        .toast { pointer-events: auto; background: white; padding: 12px 20px; border-radius: 8px; box-shadow: 0 10px 20px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 12px; animation: slideUp 0.3s forwards; border-left: 5px solid var(--primary); max-width: 400px; width: 100%; font-size: 0.9rem; }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* Loading Skeleton */
+        .skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+        @keyframes shimmer { 0% {background-position: 200% 0;} 100% {background-position: -200% 0;} }
+        .sk-card { background: white; border-radius: var(--radius); height: 300px; display: flex; flex-direction: column; overflow: hidden; }
+        .sk-img { height: 60%; width: 100%; }
+        .sk-content { padding: 15px; flex: 1; }
+        .sk-line { height: 15px; margin-bottom: 10px; border-radius: 4px; }
+        .sk-line.w-50 { width: 50%; }
+    </style>
+</head>
+<body>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container"></div>
+
+    <!-- TOP BAR (Desktop Only) -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-info">
+                <span><i class="fas fa-phone-alt"></i> 096 890 ****</span>
+                <span><i class="fas fa-map-marker-alt"></i> Phnom Penh, Cambodia</span>
+            </div>
+            <div class="top-socials">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-telegram-plane"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-content">
+            <!-- Logo -->
+            <a href="#" class="logo" onclick="filterByCategory('all'); return false;">
+                <i class="fas fa-dumbbell"></i> 
+                <span>Heng<span style="color:var(--text-main);">Fitness</span></span>
+            </a>
+
+            <!-- Center Search (Desktop) -->
+            <div class="nav-search-wrapper">
+                <div class="nav-search">
+                    <i class="fas fa-search nav-search-icon"></i>
+                    <input type="text" class="global-search" placeholder="Search Treadmills, Dumbbells...">
+                </div>
+            </div>
+
+            <!-- Desktop Menu -->
+            <ul class="nav-links">
+                <li class="nav-item" onclick="filterByCategory('all')">Home</li>
+                <li class="nav-item">
+                    Categories <i class="fas fa-chevron-down" style="font-size:0.7rem; margin-left:5px;"></i>
+                    <div class="dropdown">
+                        <div class="drop-link" onclick="filterByCategory('Treadmills')"><i class="fas fa-running"></i> Treadmills</div>
+                        <div class="drop-link" onclick="filterByCategory('Bike')"><i class="fas fa-bicycle"></i> Exercise Bikes</div>
+                        <div class="drop-link" onclick="filterByCategory('Dumbbells')"><i class="fas fa-dumbbell"></i> Weights & Sets</div>
+                        <div class="drop-link" onclick="filterByCategory('Boxing')"><i class="fas fa-fist-raised"></i> Boxing Gear</div>
+                        <div class="drop-link" onclick="filterByCategory('Yoga')"><i class="fas fa-spa"></i> Yoga & Mats</div>
+                        <div class="drop-link" onclick="filterByCategory('Trampolines')"><i class="fas fa-arrow-up"></i> Trampolines</div>
+                    </div>
+                </li>
+                <li class="nav-item" onclick="filterByCategory('Hot Sells')">Hot Deals</li>
+            </ul>
+
+            <!-- Actions -->
+            <div class="nav-actions">
+                <button class="icon-btn" onclick="toggleWishlistSidebar()" aria-label="Wishlist">
+                    <i class="far fa-heart"></i>
+                    <span class="badge" id="wishlistCount">0</span>
+                </button>
+                <button class="icon-btn" onclick="toggleCartSidebar()" aria-label="Cart">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="badge" id="cartCount">0</span>
+                </button>
+                <button class="mobile-toggle" onclick="toggleMobileMenu()" aria-label="Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU SIDEBAR -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h2 style="color:var(--primary); font-weight:800; font-size:1.5rem;">Menu</h2>
+            <button onclick="toggleMobileMenu()" style="background:none; border:none; font-size:1.5rem; color:var(--text-muted);"><i class="fas fa-times"></i></button>
+        </div>
+        
+        <!-- Mobile Search -->
+        <div style="position:relative; margin-bottom:20px;">
+            <i class="fas fa-search" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:#9ca3af;"></i>
+            <input type="text" class="global-search" placeholder="Search products..." style="width:100%; padding:12px 12px 12px 35px; border:1px solid #ddd; border-radius:8px; outline:none;">
+        </div>
+
+        <ul style="list-style:none; font-size:1.1rem; display:flex; flex-direction:column; gap:15px;">
+            <li><a href="#" onclick="filterByCategory('all'); toggleMobileMenu()" style="display:flex; align-items:center; gap:10px;"><i class="fas fa-home" style="width:25px;"></i> All Products</a></li>
+            <li><a href="#" onclick="filterByCategory('Hot Sells'); toggleMobileMenu()" style="display:flex; align-items:center; gap:10px;"><i class="fas fa-fire" style="width:25px; color:orange;"></i> Hot Deals</a></li>
+            <li style="margin-top:10px; font-weight:600; color:var(--primary); font-size:0.9rem; text-transform:uppercase; letter-spacing:1px;">Categories</li>
+            <li><a href="#" onclick="filterByCategory('Treadmills'); toggleMobileMenu()" style="display:flex; align-items:center; gap:10px; margin-left:10px;"><i class="fas fa-running" style="width:25px;"></i> Treadmills</a></li>
+            <li><a href="#" onclick="filterByCategory('Bike'); toggleMobileMenu()" style="display:flex; align-items:center; gap:10px; margin-left:10px;"><i class="fas fa-bicycle" style="width:25px;"></i> Bikes</a></li>
+            <li><a href="#" onclick="filterByCategory('Dumbbells'); toggleMobileMenu()" style="display:flex; align-items:center; gap:10px; margin-left:10px;"><i class="fas fa-dumbbell" style="width:25px;"></i> Weights</a></li>
+            <li><a href="#" onclick="filterByCategory('Boxing'); toggleMobileMenu()" style="display:flex; align-items:center; gap:10px; margin-left:10px;"><i class="fas fa-fist-raised" style="width:25px;"></i> Boxing</a></li>
+            <li><a href="#" onclick="filterByCategory('Yoga'); toggleMobileMenu()" style="display:flex; align-items:center; gap:10px; margin-left:10px;"><i class="fas fa-spa" style="width:25px;"></i> Yoga</a></li>
+        </ul>
+    </div>
+
+    <!-- HERO -->
+    <header class="hero">
+        <div class="container">
+            <h1>Build Your Dream Gym</h1>
+            <p>Professional Grade Equipment for Home & Commercial Use</p>
+            <button class="btn btn-primary" style="padding:12px 30px; font-size:1rem;" onclick="document.getElementById('products-section').scrollIntoView()">
+                Start Shopping <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="container main-layout" id="products-section">
+        <!-- Sidebar Filter (Desktop Only) -->
+        <aside class="filter-sidebar">
+            <h3 style="margin-bottom:20px; color:var(--primary);">Categories</h3>
+            <nav>
+                <button class="cat-btn active" onclick="filterByCategory('all')" data-cat="all">All Products <i class="fas fa-chevron-right" style="font-size:0.8rem"></i></button>
+                <button class="cat-btn" onclick="filterByCategory('Hot Sells')" data-cat="Hot Sells">Hot Deals 🔥 <i class="fas fa-chevron-right" style="font-size:0.8rem"></i></button>
+                <button class="cat-btn" onclick="filterByCategory('New Products')" data-cat="New Products">New Arrivals ✨ <i class="fas fa-chevron-right" style="font-size:0.8rem"></i></button>
+                <button class="cat-btn" onclick="filterByCategory('Treadmills')" data-cat="Treadmills">Treadmills <i class="fas fa-chevron-right" style="font-size:0.8rem"></i></button>
+                <button class="cat-btn" onclick="filterByCategory('Bike')" data-cat="Bike">Exercise Bikes <i class="fas fa-chevron-right" style="font-size:0.8rem"></i></button>
+                <button class="cat-btn" onclick="filterByCategory('Dumbbells')" data-cat="Dumbbells">Weights <i class="fas fa-chevron-right" style="font-size:0.8rem"></i></button>
+                <button class="cat-btn" onclick="filterByCategory('Boxing')" data-cat="Boxing">Boxing Gear <i class="fas fa-chevron-right" style="font-size:0.8rem"></i></button>
+                <button class="cat-btn" onclick="filterByCategory('Yoga')" data-cat="Yoga">Yoga & Mats <i class="fas fa-chevron-right" style="font-size:0.8rem"></i></button>
+                <button class="cat-btn" onclick="filterByCategory('Trampolines')" data-cat="Trampolines">Trampolines <i class="fas fa-chevron-right" style="font-size:0.8rem"></i></button>
+            </nav>
+        </aside>
+
+        <!-- Product Grid -->
+        <section style="width:100%;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h2 id="categoryTitle" style="font-size:clamp(1.5rem, 3vw, 1.8rem); font-weight:700;">All Products</h2>
+                <span style="color:var(--text-muted); font-size:0.9rem;" id="productCount">Loading...</span>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- JS Injected -->
+            </div>
+
+            <div style="display:flex; justify-content:center; gap:8px; margin-top:40px;" id="pagination"></div>
+        </section>
+    </main>
+
+    <!-- SIDEBARS -->
+    <div class="sidebar-overlay" onclick="closeAllSidebars()"></div>
+
+    <!-- CART SIDEBAR -->
+    <div class="right-sidebar" id="cartSidebar">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-shopping-cart"></i> Cart</h3>
+            <button onclick="closeAllSidebars()" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">&times;</button>
+        </div>
+        <div class="sidebar-body" id="cartItemsContainer">
+            <!-- Cart Items -->
+        </div>
+        <div class="sidebar-footer">
+            <div style="display:flex; justify-content:space-between; font-size:1.2rem; font-weight:700; margin-bottom:15px;">
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <button class="btn btn-primary" style="width:100%; padding:15px;" onclick="openCheckoutModal()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- WISHLIST SIDEBAR -->
+    <div class="right-sidebar" id="wishlistSidebar">
+        <div class="sidebar-header" style="background:var(--accent);">
+            <h3><i class="fas fa-heart"></i> Wishlist</h3>
+            <button onclick="closeAllSidebars()" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">&times;</button>
+        </div>
+        <div class="sidebar-body" id="wishlistItemsContainer">
+            <!-- Wishlist Items -->
+        </div>
+    </div>
+
+    <!-- PRODUCT DETAILS MODAL -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <button class="modal-close-btn" onclick="closeModal()">&times;</button>
+            <div class="prod-modal-body">
+                <div class="modal-img-wrapper">
+                    <img id="modalImg" src="" alt="Product Image">
+                </div>
+                <div class="modal-info">
+                    <span style="text-transform:uppercase; color:var(--text-muted); font-size:0.9rem;" id="modalCat">Category</span>
+                    <h2 class="modal-title" id="modalName" style="font-size:clamp(1.5rem, 3vw, 2rem); font-weight:700; margin:5px 0;">Product Name</h2>
+                    <p class="khmer-text" id="modalKhmer" style="color:var(--text-muted); margin-bottom:15px;">Khmer Name</p>
+                    <p id="modalPrice" style="font-size:1.8rem; font-weight:700; color:var(--primary); margin-bottom:15px;">$0.00</p>
+                    <p id="modalDesc" style="color:var(--text-muted); margin-bottom:25px; line-height:1.6;">Description...</p>
+                    <div style="display:flex; gap:10px;">
+                        <button class="btn btn-primary" style="flex:1; padding:15px;" id="modalAddBtn">Add to Cart</button>
+                        <button class="btn btn-secondary" style="width:50px;" onclick="toggleWishlistFromModal()" id="modalWishBtn"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHECKOUT MODAL -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content" style="max-width:700px;">
+            <button class="modal-close-btn" onclick="closeModal()">&times;</button>
+            <div class="invoice-box">
+                <div class="invoice-header" style="display:flex; justify-content:space-between; margin-bottom:20px; border-bottom:2px solid var(--primary); padding-bottom:15px;">
+                    <div>
+                        <h2 style="color:var(--primary);">INVOICE</h2>
+                        <p style="color:var(--text-muted); font-size:0.9rem;" id="invoiceDate">Date: --</p>
+                        <p style="color:var(--text-muted); font-size:0.9rem;" id="invoiceId">ID: --</p>
+                    </div>
+                    <div style="text-align:right;">
+                        <h4>Heng Fitness</h4>
+                        <p style="font-size:0.85rem;">Phnom Penh</p>
+                        <p style="font-size:0.85rem;">096 890 ****</p>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:15px;">
+                    <input type="text" id="custName" placeholder="Your Name" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                    <input type="tel" id="custPhone" placeholder="Phone Number" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                </div>
+                <input type="text" id="custAddress" placeholder="Delivery Address" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px; margin-bottom:15px;">
+
+                <div class="invoice-table-wrapper">
+                    <table class="invoice-table">
+                        <thead>
+                            <tr style="background:#f9fafb; text-align:left;">
+                                <th style="padding:10px;">Item</th>
+                                <th style="padding:10px;">Qty</th>
+                                <th style="padding:10px; text-align:right;">Price</th>
+                                <th style="padding:10px; text-align:right;">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoiceTableBody"></tbody>
+                    </table>
+                </div>
+
+                <div style="text-align:right; margin-top:20px;">
+                    <h3 style="color:var(--primary);" id="invTotalUSD">$0.00</h3>
+                    <p style="color:var(--text-muted);" id="invTotalKHR">0 ៛</p>
+                </div>
+
+                <button class="btn btn-primary" style="width:100%; margin-top:20px; padding:12px;" onclick="confirmOrder()">Confirm Order</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer-enhanced">
+        <div class="container">
+            <div class="footer-grid-3">
+                <div class="footer-brand">
+                    <h2><i class="fas fa-dumbbell"></i> Heng Fitness</h2>
+                    <p style="margin-bottom:20px; opacity:0.8; line-height:1.6;">Your trusted partner for premium fitness equipment in Cambodia. Quality gear, expert advice.</p>
+                    <div class="footer-social-glass">
+                        <a href="#" class="footer-social-btn"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="footer-social-btn"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="footer-social-btn"><i class="fab fa-telegram-plane"></i></a>
+                        <a href="#" class="footer-social-btn"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="color:white; margin-bottom:20px;">Quick Links</h4>
+                    <div class="footer-list">
+                        <a href="#" onclick="filterByCategory('all')">All Products</a>
+                        <a href="#" onclick="filterByCategory('Hot Sells')">Hot Deals</a>
+                        <a href="#" onclick="filterByCategory('Treadmills')">Treadmills</a>
+                        <a href="#" onclick="filterByCategory('Dumbbells')">Weights</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="color:white; margin-bottom:20px;">Contact</h4>
+                    <div class="footer-contact-row">
+                        <div class="contact-icon-box"><i class="fas fa-map-marker-alt"></i></div>
+                        <div>
+                            <h5 style="color:white; margin:0;">Location</h5>
+                            <p style="margin:0; font-size:0.85rem; opacity:0.7;">Phnom Penh, Cambodia</p>
+                        </div>
+                    </div>
+                    <div class="footer-contact-row">
+                        <div class="contact-icon-box"><i class="fas fa-phone"></i></div>
+                        <div>
+                            <h5 style="color:white; margin:0;">Call Us</h5>
+                            <p style="margin:0; font-size:0.85rem; opacity:0.7;">096 890 ****</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="border-top:1px solid rgba(255,255,255,0.05); margin-top:40px; padding-top:20px; text-align:center; font-size:0.85rem; opacity:0.6;">
+                &copy; 2024 Heng Fitness Cambodia. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // --- DATA CONFIGURATION (Same Data) ---
+        const imageFileMap = {
+            1: '1. Multigym station.jpg', 2: '2. Multi Gym 3 station.jpg', 3: '3. commercial trampoline.jpg', 4: '4. Mini trampoline.jpg',
+            5: '5. Mr 639.jpg', 6: '6. Slim Bike.jpg', 7: '7. Mr 536.jpg', 8: '8. Mr 581.jpg', 9: '9. Standing Mr 536.jpg',
+            10: '10. mr 657.jpg', 11: '11. Electric Bike mr 568.jpg', 12: '12. Mr 667.jpg', 13: '13. Spin Bike.jpg', 14: '14. Electrical Bike.jpg',
+            15: '15. Recubench Excercise.jpg', 16: '16. Spin Bike (2).jpg', 17: '17. Raw machine.jpg', 18: '18. Pull up bar.jpg',
+            19: '19. Pull up bar (2).jpg', 20: '20. Pull up bar (3).jpg', 21: '21. Pull up bar (4).jpg', 22: '22. weight band.jpg',
+            23: '23. sit up bench.jpg', 24: '24. weight bench station.png', 25: '25. weight bench (2).jpg', 26: '26. flat bench.png',
+            27: '27. preacher bench.jpg', 28: '28. square wreck.jpg', 29: '29. weight bench.jpg', 30: '30. weight bench.png',
+            31: '31. Treadmill King 480.jpg', 32: '32. Treadmill 6068ds.jpg', 33: '33. Treadmill s800ds.jpg', 34: '34. Vibration small.jpg',
+            35: '35. Vibration big.jpg', 36: '36. gun vibration.jpg', 37: '37. Bench.jpg', 38: '38. inverse table.jpg',
+            39: '39. inverse table (2).jpg', 40: '40. inverse table(2).jpg', 41: '41. weight.jpg', 42: '42. Stepper.jpg',
+            43: '43. Stepper 1.jpg', 44: '44. Stepper 2.jpg', 45: '45. Yoga stand.jpg', 46: '46. Dumbbell.jpg', 47: '47. Kettle bell.jpg',
+            48: '48. Hand dumbbell.jpg', 49: '49. Dumbbell.jpg', 50: '50. Plate dumbbell.jpg', 51: '51. barbell.jpg',
+            52: '52. dumbbell Set 15kg.jpg', 53: '53. dumbbell Set 20kg.jpg', 54: '54. dumbbell Set 30kg.jpg', 55: '55. dumbbell Set 50kg.jpg',
+            56: '56. hand barbell.jpg', 57: '57. dumbbell Set 15kg.jpg', 58: '58. dumbbell Set 20kg.jpg', 59: '59. Air walker.jpg',
+            60: '60. AB Coaster.jpg', 61: '61. Mini Band.jpg', 62: '62. Wall pull up.jpg', 63: '63. Wheel rouler.jpg', 64: '64. Wheel rouler.jpg',
+            65: '65. Wheel rouler.jpg', 66: '66. Wheel rouler.jpg', 67: '67. Wheel rouler.jpg', 68: '68. Wheel rouler.jpg', 69: '69. Wheel rouler.jpg',
+            70: '70. chest workout.jpg', 71: '71. punching bag.jpg', 72: '72. punching bag mp3.jpg', 73: '73. punching human.jpg',
+            74: '74. punching bag.jpg', 75: '75. hang punching bag.jpg', 76: '76. kid punching bag.jpg', 77: '77.  punching bag.jpg',
+            78: '78.  kid punching bag.jpg', 79: '79.  table punching.jpg', 80: '80.  bosu ball.jpg', 81: '81.  glove.jpg',
+            82: '82.  step.jpg', 83: '83.  belt.jpg', 84: '84.  string.jpg', 85: '85. message.jpg', 86: '86. jumping robe.jpg',
+            87: '87. jumping robe.jpg', 88: '88. multi step.jpg', 89: '89. pro3.jpg', 90: '90. pull band.jpg', 91: '91. AB bench.jpg',
+            92: '92. yoga rouler.jpg', 93: '93. angle weight.jpg', 94: '94. dardboard.jpg', 95: '95. chesse angle.jpg', 96: '96. chesse angle.jpg',
+            97: '97. pull up.jpg', 98: '98. crip.jpg', 99: '99. glove angle.jpg', 100: '100. hard resistance band.jpg', 101: '101. crip.jpg',
+            102: '102. string.jpg', 103: '103. hard band.jpg', 104: '104. table bench.jpg', 105: '105. table bench.jpg', 106: '106. pull up stick floor.jpg',
+            107: '107. Massage.jpg', 108: '108. yoga excerciese.jpg', 109: '109. yoga ball.jpg', 110: '110. yoga ball.jpg', 111: '111. yoga penut.jpg',
+            112: '112. yoga mat.jpg', 113: '113. yoga mat.jpg', 114: '114. yoga mat.jpg', 115: '115. yoga mat.jpg', 116: '116. yoga mat.jpg',
+            117: '117. yoga mat VIP.jpg', 118: '118. Rolling.jpg', 119: '119. Rolling VIP.jpg', 120: '120. Balloon Yoga.jpg', 121: '121. Band Exercise.jpg',
+            122: '122. Band Exercise 2.jpg', 123: '123. Stand Boxing.jpg', 124: '124. Kid Stand Boxing.jpg', 125: '125. Hand Stand Boxing.jpg',
+            126: '126. Table Stand Boxing.jpg'
+        };
+
+        // --- APP STATE ---
+        let products = [];
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        let currentPage = 1;
+        const itemsPerPage = 16; // Increased slightly
+        let currentCategory = 'all';
+        let searchQuery = '';
+        let currentModalId = null;
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            generateProducts();
+            renderProducts();
+            updateCartUI();
+            updateWishlistUI();
+            
+            // Sync search inputs (desktop & mobile)
+            const searchInputs = document.querySelectorAll('.global-search');
+            searchInputs.forEach(input => {
+                input.addEventListener('input', (e) => {
+                    // Update all inputs to match
+                    searchInputs.forEach(i => { if(i !== e.target) i.value = e.target.value });
+                    searchQuery = e.target.value.toLowerCase();
+                    currentPage = 1;
+                    renderProducts();
+                });
+            });
+
+            // Scroll Effect
+            window.addEventListener('scroll', () => {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 20) navbar.classList.add('scrolled');
+                else navbar.classList.remove('scrolled');
+            });
+        });
+
+        // --- DATA LOGIC ---
+        function generateProducts() {
+            for (let i = 1; i <= 126; i++) {
+                let imageName = imageFileMap[i] || `${i}. Product.jpg`;
+                let cleanName = imageName.replace(/^\d+\.\s*/, '').replace(/\.(jpg|png|jpeg)$/i, '').replace(/\s*\(\d+\)/, '').replace(/[_-]/g, ' ').trim();
+                cleanName = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+                
+                const badge = (i % 10 === 0) ? 'Hot' : (i % 15 === 0) ? 'New' : '';
+                const cat = determineCategory(cleanName);
+                
+                products.push({
+                    id: String(i).padStart(3, '0'),
+                    name: cleanName,
+                    khmerName: translateKhmer(cleanName),
+                    category: cat,
+                    price: determinePrice(cleanName, i),
+                    rawPrice: parseFloat(determinePrice(cleanName, i).replace('$','')),
+                    image: `Images/${imageName}`,
+                    badge: badge,
+                    description: `Premium quality ${cleanName} suitable for all fitness levels. Built with durable materials.`
+                });
+            }
+        }
+
+        function determineCategory(name) {
+            const n = name.toLowerCase();
+            if(n.includes('treadmill') || n.includes('run')) return 'Treadmills';
+            if(n.includes('bike') || n.includes('spin')) return 'Bike';
+            if(n.includes('dumbbell') || n.includes('weight') || n.includes('barbell')) return 'Dumbbells';
+            if(n.includes('boxing') || n.includes('punch') || n.includes('glove')) return 'Boxing';
+            if(n.includes('yoga') || n.includes('mat') || n.includes('ball')) return 'Yoga';
+            if(n.includes('trampoline')) return 'Trampolines';
+            return 'Hot Sells';
+        }
+
+        function determinePrice(name, id) {
+            const n = name.toLowerCase();
+            let base = 35;
+            if(n.includes('treadmill')) base = 450;
+            else if(n.includes('bike')) base = 250;
+            else if(n.includes('bench')) base = 120;
+            else if(n.includes('dumbbell')) base = 25;
+            else if(n.includes('yoga')) base = 15;
+            return '$' + (base + (id % 10) * 3).toFixed(2);
+        }
+
+        function translateKhmer(name) {
+            const map = { 'Treadmill': 'ម៉ាស៊ីនរត់', 'Bike': 'កង់ហាត់', 'Yoga': 'យូហ្គា', 'Dumbbell': 'ដុំដែក', 'Boxing': 'ប្រដាល់', 'Mat': 'កម្រាល' };
+            for(let k in map) { if(name.includes(k)) return map[k]; }
+            return 'ឧបករណ៍ហាត់';
+        }
+
+        // --- RENDERING ---
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            // Responsive Skeleton
+            grid.innerHTML = Array(4).fill('<div class="sk-card"><div class="sk-img skeleton"></div><div class="sk-content"><div class="sk-line skeleton"></div><div class="sk-line w-50 skeleton"></div></div></div>').join('');
+
+            const filtered = products.filter(p => {
+                const matchesCat = currentCategory === 'all' || p.category === currentCategory || 
+                                   (currentCategory === 'Hot Sells' && p.badge === 'Hot') ||
+                                   (currentCategory === 'New Products' && p.badge === 'New');
+                const matchesSearch = p.name.toLowerCase().includes(searchQuery) || p.khmerName.includes(searchQuery);
+                return matchesCat && matchesSearch;
+            });
+
+            document.getElementById('categoryTitle').innerText = currentCategory === 'all' ? 'All Products' : currentCategory;
+            document.getElementById('productCount').innerText = `${filtered.length} Items`;
+
+            const totalPages = Math.ceil(filtered.length / itemsPerPage);
+            if(currentPage > totalPages) currentPage = 1;
+            const start = (currentPage - 1) * itemsPerPage;
+            const items = filtered.slice(start, start + itemsPerPage);
+
+            setTimeout(() => {
+                grid.innerHTML = '';
+                if(items.length === 0) {
+                    grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:50px 20px;"><h3>No products found</h3><p>Try a different category or search term.</p></div>';
+                    document.getElementById('pagination').innerHTML = '';
+                    return;
+                }
+
+                items.forEach(p => {
+                    const div = document.createElement('div');
+                    div.className = 'product-card';
+                    div.innerHTML = `
+                        ${p.badge ? `<div class="product-badge badge-${p.badge.toLowerCase()}">${p.badge}</div>` : ''}
+                        <div class="product-img" onclick="openProductModal('${p.id}')">
+                            <img src="${p.image}" onerror="this.src='https://placehold.co/400x400?text=${p.name.substring(0,10)}'" alt="${p.name}" loading="lazy">
+                            <div class="card-overlay">
+                                <button class="overlay-btn" onclick="event.stopPropagation(); addToWishlist('${p.id}')"><i class="far fa-heart"></i></button>
+                                <button class="overlay-btn" onclick="event.stopPropagation(); openProductModal('${p.id}')"><i class="fas fa-eye"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-cat">${p.category}</div>
+                            <div class="product-name">${p.name}</div>
+                            <div class="product-footer">
+                                <div class="product-price">${p.price}</div>
+                                <button class="btn btn-primary add-btn-sm" onclick="addToCart('${p.id}')">Add</button>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(div);
+                });
+                renderPagination(totalPages);
+            }, 200); // Fast render
+        }
+
+        function renderPagination(total) {
+            const el = document.getElementById('pagination');
+            el.innerHTML = '';
+            if(total <= 1) return;
+            for(let i=1; i<=total; i++) {
+                const btn = document.createElement('button');
+                btn.style.width = '35px';
+                btn.style.height = '35px';
+                btn.style.borderRadius = '6px';
+                btn.style.border = '1px solid #ddd';
+                btn.style.background = i === currentPage ? 'var(--primary)' : 'white';
+                btn.style.color = i === currentPage ? 'white' : '#333';
+                btn.innerText = i;
+                btn.onclick = () => { currentPage = i; renderProducts(); document.getElementById('products-section').scrollIntoView(); };
+                el.appendChild(btn);
+            }
+        }
+
+        function filterByCategory(cat) {
+            currentCategory = cat;
+            currentPage = 1;
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll(`[data-cat="${cat}"]`).forEach(b => b.classList.add('active'));
+            renderProducts();
+            if(document.getElementById('mobileMenu').classList.contains('active')) toggleMobileMenu();
+        }
+
+        // --- CART & WISHLIST LOGIC ---
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const existing = cart.find(i => i.id === id);
+            if(existing) existing.qty++;
+            else cart.push({ ...product, qty: 1 });
+            saveCart();
+            updateCartUI();
+            showToast('Added to Cart');
+        }
+
+        function updateCartQty(id, change) {
+            const item = cart.find(i => i.id === id);
+            if(item) {
+                item.qty += change;
+                if(item.qty <= 0) cart = cart.filter(i => i.id !== id);
+                saveCart();
+                updateCartUI();
+            }
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cartItemsContainer');
+            const badge = document.getElementById('cartCount');
+            const totalEl = document.getElementById('cartTotal');
+            
+            const count = cart.reduce((acc, item) => acc + item.qty, 0);
+            badge.innerText = count;
+            badge.style.display = count > 0 ? 'flex' : 'none';
+            
+            container.innerHTML = '';
+            let total = 0;
+            
+            if(cart.length === 0) {
+                container.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-muted); opacity:0.6;">Your cart is empty</div>';
+            } else {
+                cart.forEach(item => {
+                    total += item.rawPrice * item.qty;
+                    container.innerHTML += `
+                        <div class="side-item">
+                            <img src="${item.image}" onerror="this.src='https://placehold.co/100'">
+                            <div class="side-item-info">
+                                <div class="side-item-title">${item.name}</div>
+                                <div style="color:var(--primary); font-weight:bold;">${item.price}</div>
+                                <div class="qty-controls">
+                                    <button class="qty-btn" onclick="updateCartQty('${item.id}', -1)">-</button>
+                                    <span style="width:20px; text-align:center;">${item.qty}</span>
+                                    <button class="qty-btn" onclick="updateCartQty('${item.id}', 1)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            totalEl.innerText = '$' + total.toFixed(2);
+        }
+
+        function addToWishlist(id) {
+            if(!wishlist.includes(id)) {
+                wishlist.push(id);
+                localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                updateWishlistUI();
+                showToast('Added to Wishlist');
+            }
+        }
+
+        function updateWishlistUI() {
+            const badge = document.getElementById('wishlistCount');
+            badge.innerText = wishlist.length;
+            badge.style.display = wishlist.length > 0 ? 'flex' : 'none';
+            const container = document.getElementById('wishlistItemsContainer');
+            container.innerHTML = '';
+
+            if(wishlist.length === 0) {
+                container.innerHTML = '<div style="text-align:center; padding:40px; opacity:0.6;">Wishlist is empty</div>';
+                return;
+            }
+            wishlist.forEach(id => {
+                const item = products.find(p => p.id === id);
+                if(item) {
+                    container.innerHTML += `
+                        <div class="side-item">
+                            <img src="${item.image}" onerror="this.src='https://placehold.co/100'">
+                            <div class="side-item-info">
+                                <div class="side-item-title">${item.name}</div>
+                                <button class="btn btn-danger" style="font-size:0.8rem; padding:5px; align-self:flex-start; margin-top:5px;" onclick="removeFromWishlist('${item.id}')">Remove</button>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+        }
+
+        function removeFromWishlist(id) {
+            wishlist = wishlist.filter(i => i !== id);
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            updateWishlistUI();
+        }
+
+        // --- UI HELPERS ---
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+            document.querySelector('.sidebar-overlay').classList.toggle('active');
+        }
+
+        function toggleCartSidebar() {
+            closeAllSidebars();
+            document.getElementById('cartSidebar').classList.add('active');
+            document.querySelector('.sidebar-overlay').classList.add('active');
+        }
+
+        function toggleWishlistSidebar() {
+            closeAllSidebars();
+            document.getElementById('wishlistSidebar').classList.add('active');
+            document.querySelector('.sidebar-overlay').classList.add('active');
+        }
+
+        function closeAllSidebars() {
+            document.querySelectorAll('.right-sidebar, .mobile-menu, .modal').forEach(el => el.classList.remove('active'));
+            document.querySelector('.sidebar-overlay').classList.remove('active');
+        }
+
+        function saveCart() { localStorage.setItem('cart', JSON.stringify(cart)); }
+
+        function openProductModal(id) {
+            currentModalId = id;
+            const p = products.find(x => x.id === id);
+            if(!p) return;
+            document.getElementById('modalImg').src = p.image;
+            document.getElementById('modalImg').onerror = function(){this.src='https://placehold.co/500x500'};
+            document.getElementById('modalCat').innerText = p.category;
+            document.getElementById('modalName').innerText = p.name;
+            document.getElementById('modalKhmer').innerText = p.khmerName;
+            document.getElementById('modalPrice').innerText = p.price;
+            document.getElementById('modalDesc').innerText = p.description;
+            
+            document.getElementById('modalAddBtn').onclick = () => { addToCart(p.id); closeModal(); };
+            
+            const wishBtn = document.getElementById('modalWishBtn');
+            wishBtn.innerHTML = wishlist.includes(p.id) ? '<i class="fas fa-heart" style="color:red"></i>' : '<i class="far fa-heart"></i>';
+            
+            document.getElementById('productModal').classList.add('active');
+        }
+
+        function toggleWishlistFromModal() {
+            if(wishlist.includes(currentModalId)) removeFromWishlist(currentModalId);
+            else addToWishlist(currentModalId);
+            openProductModal(currentModalId);
+        }
+
+        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.classList.remove('active')); }
+
+        function openCheckoutModal() {
+            if(cart.length === 0) return showToast('Cart is empty!');
+            closeAllSidebars();
+            const now = new Date();
+            document.getElementById('invoiceDate').innerText = `Date: ${now.toLocaleDateString()}`;
+            document.getElementById('invoiceId').innerText = `ID: ${Math.floor(Math.random()*100000)}`;
+            
+            const tbody = document.getElementById('invoiceTableBody');
+            tbody.innerHTML = '';
+            let total = 0;
+            cart.forEach(item => {
+                const sub = item.rawPrice * item.qty;
+                total += sub;
+                tbody.innerHTML += `<tr><td style="padding:10px;">${item.name}</td><td style="padding:10px;">${item.qty}</td><td style="padding:10px; text-align:right;">$${item.rawPrice}</td><td style="padding:10px; text-align:right;">$${sub.toFixed(2)}</td></tr>`;
+            });
+            document.getElementById('invTotalUSD').innerText = '$' + total.toFixed(2);
+            document.getElementById('invTotalKHR').innerText = (total * 4100).toLocaleString() + ' ៛';
+            document.getElementById('checkoutModal').classList.add('active');
+        }
+
+        function confirmOrder() {
+            if(!document.getElementById('custName').value || !document.getElementById('custPhone').value) {
+                alert('Please fill in your Name and Phone Number');
+                return;
+            }
+            showToast('Order Confirmed!');
+            setTimeout(() => {
+                window.print();
+                cart = []; saveCart(); updateCartUI(); closeModal();
+            }, 1000);
+        }
+
+        function showToast(msg) {
+            const container = document.getElementById('toast-container');
+            const div = document.createElement('div');
+            div.className = 'toast';
+            div.innerHTML = `<i class="fas fa-check-circle" style="color:var(--primary)"></i> ${msg}`;
+            container.appendChild(div);
+            setTimeout(() => div.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
