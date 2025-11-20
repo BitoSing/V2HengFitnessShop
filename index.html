@@ -701,8 +701,9 @@
                     name: cleanName,
                     khmerName: translateKhmer(cleanName),
                     category: cat,
-                    price: determinePrice(cleanName, i),
-                    rawPrice: parseFloat(determinePrice(cleanName, i).replace('$','')),
+                    // HARDCODED PRICE CHANGE HERE
+                    price: '$168.00',
+                    rawPrice: 168.00,
                     image: `Images/${imageName}`,
                     badge: badge,
                     description: `Premium quality ${cleanName} suitable for all fitness levels. Built with durable materials.`
@@ -719,17 +720,6 @@
             if(n.includes('yoga') || n.includes('mat') || n.includes('ball')) return 'Yoga';
             if(n.includes('trampoline')) return 'Trampolines';
             return 'Hot Sells';
-        }
-
-        function determinePrice(name, id) {
-            const n = name.toLowerCase();
-            let base = 35;
-            if(n.includes('treadmill')) base = 450;
-            else if(n.includes('bike')) base = 250;
-            else if(n.includes('bench')) base = 120;
-            else if(n.includes('dumbbell')) base = 25;
-            else if(n.includes('yoga')) base = 15;
-            return '$' + (base + (id % 10) * 3).toFixed(2);
         }
 
         function translateKhmer(name) {
