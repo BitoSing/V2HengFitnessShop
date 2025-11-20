@@ -662,6 +662,20 @@
         // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
             generateProducts();
+            
+            // CRITICAL FIX: Sync Cart Prices with new hardcoded $168
+            // This prevents old LocalStorage data from showing old prices
+            if(cart.length > 0) {
+                cart = cart.map(cartItem => {
+                    const product = products.find(p => p.id === cartItem.id);
+                    if(product) {
+                        return { ...cartItem, price: product.price, rawPrice: product.rawPrice };
+                    }
+                    return cartItem;
+                });
+                saveCart();
+            }
+            
             renderProducts();
             updateCartUI();
             updateWishlistUI();
@@ -809,15 +823,24 @@
             document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll(`[data-cat="${cat}"]`).forEach(b => b.classList.add('active'));
             renderProducts();
+            window.scrollTo({ top: document.getElementById('productsGrid').offsetTop - 120, behavior: 'smooth' });
             if(document.getElementById('mobileMenu').classList.contains('active')) toggleMobileMenu();
         }
 
         // --- CART & WISHLIST LOGIC ---
         function addToCart(id) {
+            // Always fetch fresh product details (ensure new price is used)
             const product = products.find(p => p.id === id);
             const existing = cart.find(i => i.id === id);
-            if(existing) existing.qty++;
-            else cart.push({ ...product, qty: 1 });
+            
+            if(existing) {
+                existing.qty++;
+                // Update price in case it changed in the backend
+                existing.price = product.price;
+                existing.rawPrice = product.rawPrice;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
             saveCart();
             updateCartUI();
             showToast('Added to Cart');
